@@ -8,7 +8,7 @@ class Flashy {
     public $apikey;
     public $ch;
     public $root = 'https://flashyapp.com/api/';
-    public $debug = true;
+    public $debug = false;
 
     public static $error_map = array(
         "Invalid_Key" => "Flashy_Invalid_Key",
@@ -58,9 +58,6 @@ class Flashy {
 
         $response_body = curl_exec($ch);
         $info = curl_getinfo($ch);
-
-        var_dump($response_body);
-        die;
 
         $time = microtime(true) - $start;
 
