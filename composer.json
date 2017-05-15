@@ -7,8 +7,9 @@
     "license": "Apache-2.0",
     "authors": [{"name": "Flashy", "email": "hello@flashyapp.com", "homepage": "https://flashyapp.com", "role": "Developer"}],
     "require": {
-        "php": ">=5.2.0"
+        "php": ">=5.4.0"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": {
             "Flashy": "library/"
