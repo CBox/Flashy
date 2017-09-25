@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Flashy/Lists.php';
 require_once 'Flashy/Sms.php';
 require_once 'Flashy/Exceptions.php';
 
@@ -23,7 +24,7 @@ class Flashy {
 
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'Flashy-PHP/1.0.54');
-        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->ch, CURLOPT_POST, true);
         curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->ch, CURLOPT_HEADER, false);
@@ -34,6 +35,7 @@ class Flashy {
         $this->root = rtrim($this->root, '/') . '/';
 
         $this->sms = new Flashy_Sms($this);
+        $this->lists = new Flashy_Lists($this);
     }
 
     public function __destruct() {
