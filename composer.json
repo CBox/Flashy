@@ -2,8 +2,8 @@
     "name": "cbox/flashy",
     "type": "library",
     "version": "1.0.0",
-    "description": "API client library for Flashy platform.",
-    "keywords": ["email", "api", "sms"],
+    "description": "PHP API client library for Flashyapp.com platform.",
+    "keywords": ["marketing-automations", "email", "api", "sms"],
     "license": "Apache-2.0",
     "authors": [{"name": "Flashy", "email": "hello@flashyapp.com", "homepage": "https://flashyapp.com", "role": "Developer"}],
     "require": {

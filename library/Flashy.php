@@ -1,7 +1,7 @@
 <?php
-
 require_once 'Flashy/Lists.php';
 require_once 'Flashy/Sms.php';
+require_once 'Flashy/Events.php';
 require_once 'Flashy/Exceptions.php';
 
 class Flashy {
@@ -9,6 +9,7 @@ class Flashy {
     public $apikey;
     public $ch;
     public $root = 'https://flashyapp.com/api/';
+    public $tracker = 'https://track.flashyapp.com/events/';
     public $debug = false;
 
     public static $error_map = array(
@@ -32,8 +33,7 @@ class Flashy {
         curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($this->ch, CURLOPT_TIMEOUT, 600);
 
-        $this->root = rtrim($this->root, '/') . '/';
-
+        $this->events = new Flashy_Events($this);
         $this->sms = new Flashy_Sms($this);
         $this->lists = new Flashy_Lists($this);
     }
@@ -42,21 +42,23 @@ class Flashy {
         curl_close($this->ch);
     }
 
-    public function call($url, $params) {
+    public function call($url, $params, $parent = "root") {
         $params['key'] = $this->apikey;
 
         $params = json_encode($params);
 
+        $endpoint = ( $parent == "root" ) ? rtrim($this->root, '/') . '/' : rtrim($this->tracker, '/') . '/';
+
         $ch = $this->ch;
 
-        curl_setopt($ch, CURLOPT_URL, $this->root . $url);
+        curl_setopt($ch, CURLOPT_URL, $endpoint . $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         curl_setopt($ch, CURLOPT_VERBOSE, $this->debug);
 
         $start = microtime(true);
 
-        $this->log('Call to ' . $this->root . $url . ' ' . $params);
+        $this->log('Call to ' . $endpoint . $url . ' ' . $params);
 
         $response_body = curl_exec($ch);
         $info = curl_getinfo($ch);
@@ -82,9 +84,10 @@ class Flashy {
     }
 
     public function castError($result) {
-        if($result['status'] !== 'error' || !$result['name']) throw new Flashy_Error('We received an unexpected error: ' . json_encode($result));
+        if($result['success'] !== true) throw new Flashy_Error('We received an unexpected error: ' . json_encode($result));
 
         $class = (isset(self::$error_map[$result['name']])) ? self::$error_map[$result['name']] : 'Flashy_Error';
+
         return new $class($result['message'], $result['code']);
     }
 

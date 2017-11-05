@@ -2,7 +2,8 @@
 
 class Flashy_Lists {
 
-    public function __construct(Flashy $master) {
+    public function __construct(Flashy $master)
+    {
         $this->master = $master;
     }
 
@@ -16,12 +17,24 @@ class Flashy_Lists {
      *     - source string contact source.
      * @return array of structs 
      *     - return[] struct the sending results for a single recipient
-     *         - status string "success" or failed
+     *         - success boolean true / false
      *         - errors array error list
      *         - subscriber array if the subscription created successfully
      */
-    public function subscribe($list_id, $subscriber) {
+    public function subscribe($list_id, $subscriber)
+    {
         $_params = array("subscriber" => $subscriber);
-        return $this->master->call('lists/' . $list_id .'/subscribe', $_params);
+
+        $subscriber = $this->master->call('lists/' . $list_id .'/subscribe', $_params);
+
+        // If we created the subscription successfully we will also send all the events history of the contact + setC.
+        if( isset($subscriber['success']) && $subscriber['success'] == true )
+        {
+            $this->master->events->bulk($subscriber['subscriber']['contact_id']);
+
+            $this->master->events->setCustomer($subscriber['subscriber']['email']);
+        }
+
+        return $subscriber;
     }
 }
