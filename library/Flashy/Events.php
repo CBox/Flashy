@@ -19,7 +19,7 @@ class Flashy_Events {
         return $this->master->call('track', $_params, 'events');
     }
 
-    public function bulk($contact_id = null, $events = "cookie", $identity = "contact_id")
+    public function bulk($contact_id = null, $events_list = "cookie", $identity = "contact_id")
     {
         if( $contact_id == null )
         {
@@ -30,7 +30,7 @@ class Flashy_Events {
 
         if($contact_id == null) return ['success' => false, 'errors' => 'contact id or flashy id not found'];
 
-        if($events == "cookie" && isset($_COOKIE['flashy_thunder']))
+        if($events_list == "cookie" && isset($_COOKIE['flashy_thunder']))
         {
             $events = json_decode(base64_decode($_COOKIE['flashy_thunder']), true);
 
@@ -38,6 +38,14 @@ class Flashy_Events {
             {
                 $event['body'][$identity] = ( $identity == "contact_id" ) ? $contact_id : base64_encode($contact_id);
             }
+        }
+        else if( $events_list !== "cookie" )
+        {
+            $events = $events_list;
+        }
+        else
+        {
+            $events = [];
         }
 
         if(count($events) == 0) return ['success' => false, 'errors' => 'events not found'];

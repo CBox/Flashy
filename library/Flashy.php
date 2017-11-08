@@ -25,7 +25,7 @@ class Flashy {
 
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'Flashy-PHP/1.0.54');
-        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($this->ch, CURLOPT_POST, true);
         curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->ch, CURLOPT_HEADER, false);
@@ -84,7 +84,7 @@ class Flashy {
     }
 
     public function castError($result) {
-        if($result['success'] !== true) throw new Flashy_Error('We received an unexpected error: ' . json_encode($result));
+        if(!isset($result['success']) || $result['success'] !== true) throw new Flashy_Error('We received an unexpected error: ' . json_encode($result));
 
         $class = (isset(self::$error_map[$result['name']])) ? self::$error_map[$result['name']] : 'Flashy_Error';
 
