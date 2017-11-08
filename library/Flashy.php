@@ -1,4 +1,5 @@
 <?php
+require_once 'Flashy/Contacts.php';
 require_once 'Flashy/Lists.php';
 require_once 'Flashy/Sms.php';
 require_once 'Flashy/Events.php';
@@ -35,6 +36,7 @@ class Flashy {
 
         $this->events = new Flashy_Events($this);
         $this->sms = new Flashy_Sms($this);
+        $this->contacts = new Flashy_Contacts($this);
         $this->lists = new Flashy_Lists($this);
     }
 
