@@ -5,6 +5,10 @@ require_once 'Flashy/Sms.php';
 require_once 'Flashy/Events.php';
 require_once 'Flashy/Exceptions.php';
 
+if ( !function_exists('json_encode') ) {
+    require_once 'Flashy/JSON.php';
+}
+
 class Flashy {
     
     public $apikey;
