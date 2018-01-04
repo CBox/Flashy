@@ -12,7 +12,7 @@ class Flashy_Events {
         if($contact_id == null)
             $contact_id = $this->getContactId($contact_id);
 
-        if($contact_id == null) return ['success' => false, 'errors' => 'contact id or flashy id not found'];
+        if($contact_id == null) return array('success' => false, 'errors' => 'contact id or flashy id not found');
 
         $_params = array("contact_id" => $contact_id);
 
@@ -28,7 +28,7 @@ class Flashy_Events {
             $contact_id = $this->getContactId($contact_id);
         }
 
-        if($contact_id == null) return ['success' => false, 'errors' => 'contact id or flashy id not found'];
+        if($contact_id == null) return array('success' => false, 'errors' => 'contact id or flashy id not found');
 
         if($events_list == "cookie" && isset($_COOKIE['flashy_thunder']))
         {
@@ -45,10 +45,10 @@ class Flashy_Events {
         }
         else
         {
-            $events = [];
+            $events = array();
         }
 
-        if(count($events) == 0) return ['success' => false, 'errors' => 'events not found'];
+        if(count($events) == 0) return array('success' => false, 'errors' => 'events not found');
 
         $_params = array("events" => $events);
 
