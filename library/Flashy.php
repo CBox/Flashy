@@ -1,11 +1,14 @@
 <?php
+require_once 'Flashy/Account.php';
+require_once 'Flashy/Import.php';
+require_once 'Flashy/Catalogs.php';
 require_once 'Flashy/Contacts.php';
 require_once 'Flashy/Lists.php';
 require_once 'Flashy/Sms.php';
 require_once 'Flashy/Events.php';
 require_once 'Flashy/Exceptions.php';
 
-if ( !function_exists('json_encode') ) {
+if( !function_exists('json_encode') ) {
     require_once 'Flashy/JSON.php';
 }
 
@@ -38,6 +41,9 @@ class Flashy {
         curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($this->ch, CURLOPT_TIMEOUT, 600);
 
+        $this->account = new Flashy_Account($this);
+        $this->catalogs = new Flashy_Catalogs($this);
+        $this->import = new Flashy_Import($this);
         $this->events = new Flashy_Events($this);
         $this->sms = new Flashy_Sms($this);
         $this->contacts = new Flashy_Contacts($this);
