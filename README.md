@@ -2,7 +2,7 @@
 
 We recommend to install via composer
 ```
-composer require cbox/flashy
+composer require "cbox/flashy @dev"
 ```
 
 ## Requirements
