@@ -37,4 +37,13 @@ class Flashy_Lists {
 
         return $subscriber;
     }
+
+    public function all()
+    {
+        $_params = array();
+
+        $lists = $this->master->call('lists', $_params);
+
+        return $lists;
+    }
 }
