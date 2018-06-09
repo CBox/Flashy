@@ -26,6 +26,22 @@ class Flashy_Catalogs {
     }
 
     /**
+     * Get catalogs
+     * @return array of structs 
+     *     - return[] struct the sending results for a single recipient
+     *         - success boolean true / false
+     *         - errors array error list
+     */
+    public function get()
+    {
+        $_params = array();
+
+        $catalogs = $this->master->call('catalogs', $_params);
+
+        return $catalogs;
+    }
+
+    /**
      * Create contact
      * @param string $email email address of the contact we want to get
      * @return array of structs 
