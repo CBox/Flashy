@@ -29,17 +29,9 @@ class Flashy {
 
         if(!$apikey) throw new Flashy_Error('You must provide a Flashy API key');
 
-        $this->apikey = $apikey;
+        $this->init();
 
-        $this->ch = curl_init();
-        curl_setopt($this->ch, CURLOPT_USERAGENT, 'Flashy-PHP/1.0.54');
-        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($this->ch, CURLOPT_POST, true);
-        curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($this->ch, CURLOPT_HEADER, false);
-        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($this->ch, CURLOPT_TIMEOUT, 600);
+        $this->apikey = $apikey;
 
         $this->account = new Flashy_Account($this);
         $this->catalogs = new Flashy_Catalogs($this);
@@ -48,6 +40,20 @@ class Flashy {
         $this->sms = new Flashy_Sms($this);
         $this->contacts = new Flashy_Contacts($this);
         $this->lists = new Flashy_Lists($this);
+    }
+
+    public function init()
+    {
+        $this->ch = curl_init();
+
+        curl_setopt($this->ch, CURLOPT_USERAGENT, 'Flashy-PHP/1.0.54');
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->ch, CURLOPT_POST, true);
+        curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($this->ch, CURLOPT_HEADER, false);
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($this->ch, CURLOPT_TIMEOUT, 600);
     }
 
     public function __destruct() {
@@ -61,6 +67,8 @@ class Flashy {
 
         $endpoint = ( $parent == "root" ) ? rtrim($this->root, '/') . '/' : rtrim($this->tracker, '/') . '/';
 
+        $this->init();
+        
         $ch = $this->ch;
 
         curl_setopt($ch, CURLOPT_URL, $endpoint . $url);
