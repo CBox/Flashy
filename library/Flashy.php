@@ -1,4 +1,5 @@
 <?php
+require_once 'Flashy/Thunder.php';
 require_once 'Flashy/Account.php';
 require_once 'Flashy/Import.php';
 require_once 'Flashy/Catalogs.php';
@@ -33,6 +34,7 @@ class Flashy {
 
         $this->apikey = $apikey;
 
+        $this->thunder = new Flashy_Thunder($this);
         $this->account = new Flashy_Account($this);
         $this->catalogs = new Flashy_Catalogs($this);
         $this->import = new Flashy_Import($this);
