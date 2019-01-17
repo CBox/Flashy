@@ -33,7 +33,7 @@ class Flashy_Sms {
      *         - error_code string the reason for the rejection if the recipient status is "rejected" - one of "hard-bounce", "soft-bounce", "spam", "unsub", "custom", "invalid-sender", "invalid", "test-mode-limit", or "rule"
      *         - id string the message's unique id
      */
-    public function status($message_id, $async=false, $send_at=null) {
+    public function status($message_id) {
         $_params = array("message_id" => $message_id);
         return $this->master->call('sms/status', $_params);
     }
