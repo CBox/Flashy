@@ -25,6 +25,13 @@ class Flashy_Contacts {
     {
         $_params = array("contact" => $contact);
 
+        if( iseet($_COOKIE['flashy_attribution']) && $_COOKIE['flashy_attribution'] != "" )
+        {
+            $attr = implode(">", $_COOKIE['flashy_attribution']);
+
+            $contact['attribution'] = $attr;
+        }
+
         $contact = $this->master->call('contacts/create', $_params);
 
         // If we created the contact successfully we will also send all the events history of the contact + setCustomer.
