@@ -23,14 +23,14 @@ class Flashy_Contacts {
      */
     public function create($contact)
     {
-        $_params = array("contact" => $contact);
-
         if( isset($_COOKIE['flashy_attribution']) && $_COOKIE['flashy_attribution'] != "" )
         {
             $attr = implode(">", json_decode($_COOKIE['flashy_attribution']));
 
             $contact['attribution'] = $attr;
         }
+
+        $_params = array("contact" => $contact);
 
         $contact = $this->master->call('contacts/create', $_params);
 
