@@ -27,7 +27,7 @@ class Flashy_Contacts {
 
         if( isset($_COOKIE['flashy_attribution']) && $_COOKIE['flashy_attribution'] != "" )
         {
-            $attr = implode(">", $_COOKIE['flashy_attribution']);
+            $attr = implode(">", json_decode($_COOKIE['flashy_attribution']));
 
             $contact['attribution'] = $attr;
         }
