@@ -25,7 +25,7 @@ class Flashy_Contacts {
     {
         $_params = array("contact" => $contact);
 
-        if( iseet($_COOKIE['flashy_attribution']) && $_COOKIE['flashy_attribution'] != "" )
+        if( isset($_COOKIE['flashy_attribution']) && $_COOKIE['flashy_attribution'] != "" )
         {
             $attr = implode(">", $_COOKIE['flashy_attribution']);
 
