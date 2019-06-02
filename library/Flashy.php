@@ -6,6 +6,7 @@ require_once 'Flashy/Catalogs.php';
 require_once 'Flashy/Contacts.php';
 require_once 'Flashy/Lists.php';
 require_once 'Flashy/Sms.php';
+require_once 'Flashy/Email.php';
 require_once 'Flashy/Events.php';
 require_once 'Flashy/Exceptions.php';
 
@@ -40,6 +41,7 @@ class Flashy {
         $this->import = new Flashy_Import($this);
         $this->events = new Flashy_Events($this);
         $this->sms = new Flashy_Sms($this);
+        $this->email = new Flashy_Email($this);
         $this->contacts = new Flashy_Contacts($this);
         $this->lists = new Flashy_Lists($this);
     }
