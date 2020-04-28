@@ -7,16 +7,19 @@ class Flashy_Events {
         $this->master = $master;
     }
 
-    public function track($contact_id = null)
+    public function track($event, $params)
     {
-        if($contact_id == null)
-            $contact_id = $this->getContactId($contact_id);
+        if( !isset($params['flashy_id']) && !isset($params['contact_id']) && !isset($params['email']) )
+        {
+            return array('success' => false, 'errors' => 'email / contact id / flashy id not found');
+        }
 
-        if($contact_id == null) return array('success' => false, 'errors' => 'contact id or flashy id not found');
+        $_params = array(
+            "event" => $event,
+            "body" => $params
+        );
 
-        $_params = array("contact_id" => $contact_id);
-
-        return $this->master->call('track', $_params, 'events');
+        $track = $this->master->call('track', $_params, 'events');
     }
 
     public function bulk($contact_id = null, $events_list = "cookie", $identity = "contact_id")
