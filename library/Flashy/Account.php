@@ -32,11 +32,9 @@ class Flashy_Account {
      *         - errors array error list
      *         - account array
      */
-    public function connect($platform, $profile = null)
+    public function connect($data)
     {
-        $_params = array("platform" => $platform, "profile" => $profile);
-
-        $account = $this->master->call('platforms/connect', $_params);
+        $account = $this->master->call('platforms/connect', $data);
 
         return $account;
     }
